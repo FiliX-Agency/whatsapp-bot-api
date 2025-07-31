@@ -33,8 +33,8 @@ export async function startBot() {
 
       const base64Data = qrImage.replace(/^data:image\/png;base64,/, "");
       const buffer = Buffer.from(base64Data, "base64");
-    
-      fs.writeFileSync("./public/qr.png", buffer);  
+
+      fs.writeFileSync("./public/qr.png", buffer);
     }
 
     if (connection === "close") {
@@ -47,7 +47,7 @@ export async function startBot() {
       }
     } else if (connection === "open") {
       qrImage = null;
-      fs.unlinkSync("./public/qr.png");
+      if (fs.existsSync("./public/qr.png")) fs.unlinkSync("./public/qr.png");
     }
   });
 }
