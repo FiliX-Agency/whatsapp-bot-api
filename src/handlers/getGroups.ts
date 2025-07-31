@@ -1,4 +1,4 @@
-import { getSock } from "../bot";
+import { getSock } from "../bot.js";
 
 export async function getGroups() {
   const sock = getSock();

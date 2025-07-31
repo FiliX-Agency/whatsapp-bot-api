@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
     "target": "ES2022", // modern JS features
-    "module": "esnext", // ESM output
-    "moduleResolution": "node", // resolves `import` properly in ESM
+    "module": "nodenext", // ESM output
+    "moduleResolution": "nodenext", // resolves `import` properly in ESM
     "esModuleInterop": true, // allows default imports from CommonJS modules
     "forceConsistentCasingInFileNames": true,
     "strict": true, // enables all strict type-checking options
     "skipLibCheck": true,
-    "noEmit": true, // useful for ts-node / nodemon usage
+    "noEmit": false, // useful for ts-node / nodemon usage
     "resolveJsonModule": true, // allows importing JSON files
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true, // needed for ESM + tools like ts-node
     "incremental": true,
     "types": ["node"],
-    "lib": ["ES2022"]
+    "lib": ["ES2022"],
+    "rootDir": "src",
+    "outDir": "dist"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

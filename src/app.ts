@@ -1,10 +1,10 @@
 import express from "express";
-import { getQR } from "./bot";
-import { sendMessage } from "./handlers/sendMessage";
-import { getGroups } from "./handlers/getGroups";
-import { getChannels } from "./handlers/getChannels";
+import { getQR } from "./bot.js";
+import { sendMessage } from "./handlers/sendMessage.js";
+import { getGroups } from "./handlers/getGroups.js";
+import { getChannels } from "./handlers/getChannels.js";
 import multer from "multer";
-import { getMediaType } from "./lib/helpers";
+import { getMediaType } from "./lib/helpers.js";
 
 const app = express();
 

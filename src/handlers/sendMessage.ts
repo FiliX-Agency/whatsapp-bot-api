@@ -1,12 +1,11 @@
 import { AnyMessageContent } from "@whiskeysockets/baileys";
-import { getSock } from "../bot";
+import { getSock } from "../bot.js";
 
 type MediaType = "image" | "video" | "audio" | "text" | "document";
 
 export async function sendMessage(jid: string, content: any, type?: MediaType) {
   const sock = getSock();
   if (!sock) throw new Error("Socket not connected");
-
   const formatted =
     jid.includes("@s.whatsapp.net") || jid.includes("@g.us")
       ? jid
@@ -47,8 +46,6 @@ export async function sendMessage(jid: string, content: any, type?: MediaType) {
       };
       break;
   }
-
-  console.log(messageContent);
 
   await sock.sendMessage(formatted, messageContent!);
 }

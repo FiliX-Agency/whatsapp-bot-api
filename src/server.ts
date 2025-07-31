@@ -1,5 +1,5 @@
-import { startBot } from "./bot";
-import app from "./app";
+import { startBot } from "./bot.js";
+import app from "./app.js";
 import { createServer } from "http";
 
 async function bootstrap() {
