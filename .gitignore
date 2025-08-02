@@ -1,3 +1,4 @@
 /auth/*
 /public/*
 /node_modules/
+/dist/
