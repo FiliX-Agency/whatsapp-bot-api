@@ -16,9 +16,17 @@ const options: swaggerJSDoc.Options = {
     servers: [{ url: "http://localhost:4000" }],
   },
   apis: [
+    // #region TS files
     path.join(dirName, "../routes/**/*.ts"),
     path.join(dirName, "./tags.ts"),
     path.join(dirName, "./components.ts"),
+    //#endregion
+
+    // #region JS files
+    path.join(dirName, "../routes/**/*.js"),
+    path.join(dirName, "./tags.js"),
+    path.join(dirName, "./components.js"),
+    //#endregion
   ],
 };
 

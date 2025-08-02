@@ -11,7 +11,7 @@
     "resolveJsonModule": true, // allows importing JSON files
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true, // needed for ESM + tools like ts-node
-    "incremental": true,
+    // "incremental": true,
     "types": ["node"],
     "lib": ["ES2022"],
     "rootDir": "src",
