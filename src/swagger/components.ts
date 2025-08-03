@@ -92,5 +92,44 @@
  *              media:
  *                  type: string
  *                  format: binary
- *
+ *      SignupDTO:
+ *          type: object
+ *          required:
+ *              - username
+ *              - password
+ *              - passwordConfirm
+ *          properties:
+ *              username:
+ *                  type: string
+ *                  example: gunmaster
+ *              name:
+ *                  type: string
+ *                  example: mohammad
+ *              surname:
+ *                  type: string
+ *                  example: shekohi
+ *              password:
+ *                  type: string
+ *                  example: pass123
+ *              passwordConfirm:
+ *                  type: string
+ *                  example: pass123
+ */
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      SigninDTO:
+ *          type: object
+ *          required:
+ *              - username
+ *              - password
+ *          properties:
+ *              username:
+ *                  type: string
+ *                  example: gunmaster
+ *              password:
+ *                  type: string
+ *                  example: pass123
  */

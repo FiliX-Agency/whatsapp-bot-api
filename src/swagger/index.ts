@@ -13,6 +13,20 @@ const options: swaggerJSDoc.Options = {
       version: "0.0.1",
       description: "Api Documentation for a whatsapp bot api",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT"
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ],
     servers: [{ url: "http://localhost:4000" }],
   },
   apis: [
