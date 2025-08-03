@@ -28,6 +28,6 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("waAuth", schema);
+const model = mongoose.model("waSession", schema);
 
 export default model;

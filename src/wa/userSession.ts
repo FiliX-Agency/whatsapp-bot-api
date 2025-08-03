@@ -20,7 +20,7 @@ export async function initUserSession(userId: string) {
 
   const { state, saveCreds } = await authStore(userId);
   const { version } = await fetchLatestBaileysVersion();
-
+  console.log("state ->", state);
   const sock = makeWASocket({
     version,
     // printQRInTerminal: true,
@@ -33,7 +33,6 @@ export async function initUserSession(userId: string) {
     "connection.update",
     async ({ connection, lastDisconnect, qr }) => {
       if (qr) {
-        // await WASession.updateOne()
         const qrImage = await QRCode.toDataURL(qr);
 
         const base64Data = qrImage.replace(/^data:image\/png;base64,/, "");
@@ -61,14 +60,14 @@ export async function initUserSession(userId: string) {
         );
       }
       if (connection === "close") {
-        console.log((lastDisconnect?.error as any)?.message);
         const shouldReconnect =
           (lastDisconnect?.error as any)?.output?.statusCode !==
-            DisconnectReason.loggedOut ||
-          (lastDisconnect?.error as any)?.message ===
-            "Stream Errored (restart required)";
-        console.log(shouldReconnect);
+          DisconnectReason.loggedOut;
+
+        console.log("last connection ->", lastDisconnect);
+
         if (shouldReconnect) {
+          console.log("reconnecting.");
           await initUserSession(userId);
         }
         activeSockets.delete(userId);
