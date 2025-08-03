@@ -3,6 +3,7 @@ import {
   AuthenticationState,
   SignalDataTypeMap,
   AuthenticationCreds,
+  BufferJSON,
 } from "@whiskeysockets/baileys";
 import { WASession } from "../models/index.js";
 
@@ -19,19 +20,15 @@ async function authStore(userId: string): Promise<{
     creds = initAuthCreds();
     keys = {};
   } else {
-    creds = dbSession.creds;
-    keys = dbSession.keys;
+    creds = JSON.parse(dbSession.creds, BufferJSON.reviver);
+    keys = JSON.parse(dbSession.keys, BufferJSON.reviver);
   }
-  console.log("outside ->", creds);
-  console.log("outside ->", keys);
   const save = async () => {
-    console.log("inside ->", creds);
-    console.log("inside ->", keys);
     await WASession.updateOne(
       { userId },
       {
-        creds,
-        keys,
+        creds: JSON.stringify(creds, BufferJSON.replacer),
+        keys: JSON.stringify(keys, BufferJSON.replacer),
         qr: {
           url: null,
           isUsed: true,
@@ -54,7 +51,7 @@ async function authStore(userId: string): Promise<{
           }
           return data;
         },
-        set: (data) => {
+        set: async (data) => {
           console.log("keys set ->", data);
           for (const category in data) {
             const key = category as keyof SignalDataTypeMap;
@@ -65,7 +62,7 @@ async function authStore(userId: string): Promise<{
 
             Object.assign(keys[key]!, data[key]!);
           }
-          // await save();
+          await save();
         },
       },
     },

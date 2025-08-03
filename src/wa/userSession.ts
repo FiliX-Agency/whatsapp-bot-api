@@ -2,6 +2,7 @@ import {
   DisconnectReason,
   fetchLatestBaileysVersion,
   makeWASocket,
+  WASocket,
 } from "@whiskeysockets/baileys";
 import { authStore } from "./authStore.js";
 import { WASession } from "../models/index.js";
@@ -13,17 +14,13 @@ import path from "path";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-const activeSockets = new Map();
+const activeSockets = new Map<string, WASocket>();
 
 export async function initUserSession(userId: string) {
-  if (activeSockets.has(userId)) return activeSockets.get(userId);
-
   const { state, saveCreds } = await authStore(userId);
   const { version } = await fetchLatestBaileysVersion();
-  console.log("state ->", state);
   const sock = makeWASocket({
     version,
-    // printQRInTerminal: true,
     auth: state,
   });
 
@@ -64,13 +61,12 @@ export async function initUserSession(userId: string) {
           (lastDisconnect?.error as any)?.output?.statusCode !==
           DisconnectReason.loggedOut;
 
-        console.log("last connection ->", lastDisconnect);
-
         if (shouldReconnect) {
           console.log("reconnecting.");
           await initUserSession(userId);
+        } else {
+          activeSockets.delete(userId);
         }
-        activeSockets.delete(userId);
       } else if (connection === "open") {
         const session = await WASession.findOne({ userId });
         if (session?.qr?.url) {
@@ -82,6 +78,7 @@ export async function initUserSession(userId: string) {
     }
   );
 
+  if (activeSockets.has(userId)) return activeSockets.get(userId);
   activeSockets.set(userId, sock);
   return sock;
 }
